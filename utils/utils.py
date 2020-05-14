@@ -1,3 +1,4 @@
+import glob
 from builtins import print
 import numpy as np
 import pandas as pd
@@ -62,7 +63,7 @@ def read_dataset(root_dir, archive_name, dataset_name):
     cur_root_dir = root_dir.replace('-temp', '')
 
     if archive_name == 'mts_archive':
-        file_name = cur_root_dir + '/archives/' + archive_name + '/' + dataset_name + '/'
+        file_name = cur_root_dir + '/archives/' + mtsdata + '/' + dataset_name + '/'
         x_train = np.load(file_name + 'x_train.npy')
         y_train = np.load(file_name + 'y_train.npy')
         x_test = np.load(file_name + 'x_test.npy')
@@ -101,7 +102,14 @@ def read_dataset(root_dir, archive_name, dataset_name):
         datasets_dict[dataset_name] = (x_train.copy(), y_train.copy(), x_test.copy(),
                                        y_test.copy())
     else:
-        file_name = cur_root_dir + '/archives/' + archive_name + '/' + dataset_name + '/' + dataset_name
+#        file_name = cur_root_dir + '/archives/' + archive_name + '/' + dataset_name + '/' + dataset_name
+        file_name = cur_root_dir + '\\archives\\' + archive_name + '\\' + dataset_name
+
+        file_name = file_name + '\\' + dataset_name
+        if os.path.exists(file_name):
+            print('Already exist')
+        else:
+            print('file is not exist')
         x_train, y_train = readucr(file_name + '_TRAIN')
         x_test, y_test = readucr(file_name + '_TEST')
         datasets_dict[dataset_name] = (x_train.copy(), y_train.copy(), x_test.copy(),
@@ -219,8 +227,8 @@ def transform_to_same_length(x, n_var, max_length):
 
 
 def transform_mts_to_ucr_format():
-    mts_root_dir = '/mnt/Other/mtsdata/'
-    mts_out_dir = '/mnt/nfs/casimir/archives/mts_archive/'
+    mts_root_dir = './data/mtsdata/'
+    mts_out_dir = './data/ucr/'
     for dataset_name in MTS_DATASET_NAMES:
         # print('dataset_name',dataset_name)
 
@@ -264,6 +272,7 @@ def transform_mts_to_ucr_format():
         x_train = transform_to_same_length(x_train, n_var, max_length)
         x_test = transform_to_same_length(x_test, n_var, max_length)
 
+        create_directory(out_dir)
         # save them
         np.save(out_dir + 'x_train.npy', x_train)
         np.save(out_dir + 'y_train.npy', y_train)

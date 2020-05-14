@@ -7,6 +7,9 @@ import time
 from utils.utils import save_logs_t_leNet as save_logs
 from utils.utils import calculate_metrics
 
+#nb_epochs = 1000
+TLENET_EPOCHS = 100
+
 class Classifier_TLENET:
     
     def __init__(self, output_directory, verbose,build=True):
@@ -145,7 +148,8 @@ class Classifier_TLENET:
         if not tf.test.is_gpu_available:
             print('error')
             exit()
-        nb_epochs = 1000
+        #nb_epochs = 1000
+        nb_epochs = TLENET_EPOCHS
         batch_size= 256
         nb_classes = y_train.shape[1]
 
@@ -173,8 +177,8 @@ class Classifier_TLENET:
         input_shape = x_train.shape[1:]
         model = self.build_model(input_shape,nb_classes)
         
-        if self.verbose == True:
-            model.summary()
+        #if self.verbose == True:
+        model.summary()
         
         start_time = time.time()
         

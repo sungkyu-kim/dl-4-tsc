@@ -80,8 +80,16 @@ def create_classifier(classifier_name, input_shape, nb_classes, output_directory
 ############################################### main
 
 # change this directory for your machine
-root_dir = '/b/home/uha/hfawaz-datas/dl-tsc-temp/'
+#root_dir = '/b/home/uha/hfawaz-datas/dl-tsc-temp/'
 
+root_dir = 'C:\work\dataset'
+#classifier_list = ['fcn','mlp','resnet','mcnn','tlenet','twiesn','encoder','mcdcnn','cnn','inception']
+#classifier_list = ['mcdcnn','cnn','inception']
+#classifier_list = ['fcn','mlp','resnet','mcnn','mcdcnn','cnn','inception']
+#classifier_list = ['fcn','mlp','resnet','cnn']
+classifier_list = ['fcn']
+MTS_DATASET_NAMES_list = ['JapaneseVowels']
+'''
 if sys.argv[1] == 'run_all':
     for classifier_name in CLASSIFIERS:
         print('classifier_name', classifier_name)
@@ -126,32 +134,46 @@ elif sys.argv[1] == 'generate_results_csv':
     res = generate_results_csv('results.csv', root_dir)
     print(res.to_string())
 else:
-    # this is the code used to launch an experiment on a dataset
-    archive_name = sys.argv[1]
-    dataset_name = sys.argv[2]
-    classifier_name = sys.argv[3]
-    itr = sys.argv[4]
 
-    if itr == '_itr_0':
-        itr = ''
+# this is the code used to launch an experiment on a dataset
+archive_name = sys.argv[1]
+dataset_name = sys.argv[2]
+classifier_name = sys.argv[3]
+itr = sys.argv[4]
+'''
+# this is the code used to launch an experiment on a dataset
+for classifier_list_ in classifier_list :
+    for dataset_name_ in MTS_DATASET_NAMES_list :
+        #archive_name = sys.argv[1]
+        #dataset_name = sys.argv[2]
+        archive_name = 'mts_archive'
+        dataset_name = dataset_name_
+        #classifier_name = sys.argv[3]
+        print('===== classifier_list_ =====')
+        print(classifier_list_)
+        print()
+classifier_name = classifier_list_
+if itr == '_itr_0':
+    itr = ''
 
-    output_directory = root_dir + '/results/' + classifier_name + '/' + archive_name + itr + '/' + \
-                       dataset_name + '/'
+#output_directory = root_dir + '/results/' + classifier_name + '/' + archive_name + itr + '/' + \
+#                   dataset_name + '/'
+output_directory = 'results\\' + dataset_name + '\\' + classifier_name + '\\'
 
-    test_dir_df_metrics = output_directory + 'df_metrics.csv'
+test_dir_df_metrics = output_directory + 'df_metrics.csv'
 
-    print('Method: ', archive_name, dataset_name, classifier_name, itr)
+print('Method: ', archive_name, dataset_name, classifier_name, itr)
 
-    if os.path.exists(test_dir_df_metrics):
-        print('Already done')
-    else:
+if os.path.exists(test_dir_df_metrics):
+    print('Already done')
+else:
 
-        create_directory(output_directory)
-        datasets_dict = read_dataset(root_dir, archive_name, dataset_name)
+    create_directory(output_directory)
+    datasets_dict = read_dataset(root_dir, archive_name, dataset_name)
 
-        fit_classifier()
+    fit_classifier()
 
-        print('DONE')
+    print('DONE')
 
-        # the creation of this directory means
-        create_directory(output_directory + '/DONE')
+    # the creation of this directory means
+    create_directory(output_directory + '/DONE')

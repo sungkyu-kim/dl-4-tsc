@@ -7,12 +7,16 @@ from utils.utils import save_logs
 from utils.utils import calculate_metrics
 from utils.utils import save_test_duration
 
+#nb_epochs=1500
+INCEPTION_EPOCH = 150
 
 class Classifier_INCEPTION:
 
     def __init__(self, output_directory, input_shape, nb_classes, verbose=False, build=True, batch_size=64, lr=0.001,
                  nb_filters=32, use_residual=True, use_bottleneck=True, depth=6, kernel_size=41, nb_epochs=1500):
 
+        #nb_epochs=1500
+        nb_epochs=INCEPTION_EPOCH
         self.output_directory = output_directory
 
         self.nb_filters = nb_filters
@@ -29,8 +33,8 @@ class Classifier_INCEPTION:
 
         if build == True:
             self.model = self.build_model(input_shape, nb_classes)
-            if (verbose == True):
-                self.model.summary()
+            #if (verbose == True):
+            self.model.summary()
             self.model.save_weights(self.output_directory + 'model_init.hdf5')
 
     def _inception_module(self, input_tensor, stride=1, activation='linear'):

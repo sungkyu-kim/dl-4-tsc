@@ -11,14 +11,17 @@ import matplotlib.pyplot as plt
 from utils.utils import save_logs
 from utils.utils import calculate_metrics
 
+#nb_epochs = 5000
+MLP_EPOCHS = 250
+
 class Classifier_MLP:
 
 	def __init__(self, output_directory, input_shape, nb_classes, verbose=False,build=True):
 		self.output_directory = output_directory
 		if build == True:
 			self.model = self.build_model(input_shape, nb_classes)
-			if(verbose==True):
-				self.model.summary()
+			#if(verbose==True):
+			self.model.summary()
 			self.verbose = verbose
 			self.model.save_weights(self.output_directory + 'model_init.hdf5')
 		return
@@ -63,7 +66,8 @@ class Classifier_MLP:
 			exit()
 		# x_val and y_val are only used to monitor the test loss and NOT for training  
 		batch_size = 16
-		nb_epochs = 5000
+		#nb_epochs = 5000
+		nb_epochs = MLP_EPOCHS
 
 		mini_batch_size = int(min(x_train.shape[0]/10, batch_size))
 

@@ -8,14 +8,17 @@ import time
 from utils.utils import save_logs
 from utils.utils import calculate_metrics
 
+#nb_epochs = 100
+ENCODER_EPOCHS = 100
+
 class Classifier_ENCODER:
 
     def __init__(self, output_directory, input_shape, nb_classes, verbose=False,build=True):
         self.output_directory = output_directory
         if build == True:
             self.model = self.build_model(input_shape, nb_classes)
-            if (verbose == True):
-                self.model.summary()
+            #if (verbose == True):
+            self.model.summary()
             self.verbose = verbose
             self.model.save_weights(self.output_directory + 'model_init.hdf5')
 
@@ -72,7 +75,8 @@ class Classifier_ENCODER:
             exit()
         # x_val and y_val are only used to monitor the test loss and NOT for training
         batch_size = 12
-        nb_epochs = 100
+        #nb_epochs = 100
+        nb_epochs = ENCODER_EPOCHS
 
         mini_batch_size = batch_size
 

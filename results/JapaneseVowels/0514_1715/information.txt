@@ -1,0 +1,43 @@
+
+
+date_str : 0514_1715
+
+test_num : 0
+
+classifier_list : ['fcn', 'mlp', 'resnet', 'cnn', 'mcnn', 'twiesn', 'mcdcnn', 'inception']
+
+time_step_size : 30
+
+colum_list : ['courseoption1', 'courseoption2', 'ipmtemp', 'doorlock']
+
+classifier_name : fcn
+end_date_str : 0514_1715
+duration : 1589444155.8848648
+
+classifier_name : mlp
+end_date_str : 0514_1716
+duration : 1589444183.366113
+
+classifier_name : resnet
+end_date_str : 0514_1716
+duration : 1589444219.3250456
+
+classifier_name : cnn
+end_date_str : 0514_1717
+duration : 1589444245.4772134
+
+classifier_name : mcnn
+end_date_str : 0514_1723
+duration : 1589444596.3592217
+
+classifier_name : twiesn
+end_date_str : 0514_1723
+duration : 1589444616.6606095
+
+classifier_name : mcdcnn
+end_date_str : 0514_1724
+duration : 1589444646.9626746
+
+classifier_name : inception
+end_date_str : 0514_1724
+duration : 1589444679.013699

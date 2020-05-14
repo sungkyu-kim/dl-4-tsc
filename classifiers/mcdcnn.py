@@ -9,6 +9,9 @@ import tensorflow as tf
 from utils.utils import save_logs
 from utils.utils import calculate_metrics
 
+#nb_epochs = 120
+MCDCNN_EPOCHS = 120
+
 
 class Classifier_MCDCNN:
 
@@ -16,8 +19,8 @@ class Classifier_MCDCNN:
         self.output_directory = output_directory
         if build == True:
             self.model = self.build_model(input_shape, nb_classes)
-            if (verbose == True):
-                self.model.summary()
+            #if (verbose == True):
+            self.model.summary()
             self.verbose = verbose
             self.model.save_weights(self.output_directory + 'model_init.hdf5')
         return
@@ -86,7 +89,8 @@ class Classifier_MCDCNN:
             print('error')
             exit()
         mini_batch_size = 16
-        nb_epochs = 120
+        #nb_epochs = 120
+        nb_epochs = MCDCNN_EPOCHS
 
         x_train, x_val, y_train, y_val = \
             train_test_split(x, y, test_size=0.33)

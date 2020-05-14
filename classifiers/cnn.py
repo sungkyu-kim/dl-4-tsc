@@ -9,6 +9,9 @@ import time
 from utils.utils import save_logs
 from utils.utils import calculate_metrics
 
+#nb_epochs = 2000
+CNN_EPOCHS = 200
+
 class Classifier_CNN:
 
     def __init__(self, output_directory, input_shape, nb_classes, verbose=False,build=True):
@@ -16,8 +19,8 @@ class Classifier_CNN:
 
         if build == True:
             self.model = self.build_model(input_shape, nb_classes)
-            if (verbose == True):
-                self.model.summary()
+            #if (verbose == True):            
+            self.model.summary()
             self.verbose = verbose
             self.model.save_weights(self.output_directory + 'model_init.hdf5')
 
@@ -61,7 +64,8 @@ class Classifier_CNN:
 
         # x_val and y_val are only used to monitor the test loss and NOT for training
         mini_batch_size = 16
-        nb_epochs = 2000
+        #nb_epochs = 2000
+        nb_epochs = CNN_EPOCHS
 
         start_time = time.time()
 
