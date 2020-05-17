@@ -111,7 +111,7 @@ class Classifier_INCEPTION:
 
         return model
 
-    def fit(self, x_train, y_train, x_val, y_val, y_true):
+    def fit(self, x_train, y_train, x_val, y_val, y_true, test_info_str, metrics_file_str, png_str):
         if not tf.test.is_gpu_available:
             print('error no gpu')
             exit()
@@ -140,7 +140,7 @@ class Classifier_INCEPTION:
         # convert the predicted from binary to integer
         y_pred = np.argmax(y_pred, axis=1)
 
-        df_metrics = save_logs(self.output_directory, hist, y_pred, y_true, duration)
+        df_metrics = save_logs(self.output_directory, hist, y_pred, y_true, duration, test_info_str, metrics_file_str, png_str)
 
         keras.backend.clear_session()
 

@@ -144,7 +144,7 @@ class Classifier_TLENET:
                 idx += increase_num
         return new_x_train,new_y_train,new_x_test,new_y_test, tot_increase_num
     
-    def fit(self, x_train, y_train, x_test, y_test,y_true):
+    def fit(self, x_train, y_train, x_test, y_test,y_true, test_info_str, metrics_file_str, png_str):
         if not tf.test.is_gpu_available:
             print('error')
             exit()
@@ -208,7 +208,7 @@ class Classifier_TLENET:
         
         duration = time.time() - start_time
         
-        save_logs(self.output_directory, hist, y_pred, y_true, duration )
+        save_logs(self.output_directory, hist, y_pred, y_true, duration, test_info_str, metrics_file_str, png_str )
 
         keras.backend.clear_session()
 

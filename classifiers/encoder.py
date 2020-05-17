@@ -69,7 +69,7 @@ class Classifier_ENCODER:
 
         return model
 
-    def fit(self, x_train, y_train, x_val, y_val, y_true):
+    def fit(self, x_train, y_train, x_val, y_val, y_true, test_info_str, metrics_file_str, png_str):
         if not tf.test.is_gpu_available:
             print('error')
             exit()
@@ -96,7 +96,7 @@ class Classifier_ENCODER:
         # convert the predicted from binary to integer
         y_pred = np.argmax(y_pred, axis=1)
 
-        save_logs(self.output_directory, hist, y_pred, y_true, duration, lr=False)
+        save_logs(self.output_directory, hist, y_pred, y_true, duration, test_info_str, metrics_file_str, png_str, lr=False)
 
         keras.backend.clear_session()
 

@@ -348,13 +348,16 @@ def plot_epochs_metric(hist, file_name, metric='loss'):
     plt.close()
 
 
-def save_logs_t_leNet(output_directory, hist, y_pred, y_true, duration):
+def save_logs_t_leNet(output_directory, hist, y_pred, y_true, duration, test_info_str, metrics_file_str, png_str):
     hist_df = pd.DataFrame(hist.history)
     hist_df.to_csv(output_directory + 'history.csv', index=False)
 
     df_metrics = calculate_metrics(y_true, y_pred, duration)
     df_metrics.to_csv(output_directory + 'df_metrics.csv', index=False)
-
+    f = open(metrics_file_str)
+    f.write(test_info_str)
+    f.write(str(df_metrics))
+    f.close()
     index_best_model = hist_df['loss'].idxmin()
     row_best_model = hist_df.loc[index_best_model]
 
@@ -372,14 +375,21 @@ def save_logs_t_leNet(output_directory, hist, y_pred, y_true, duration):
 
     # plot losses
     plot_epochs_metric(hist, output_directory + 'epochs_loss.png')
+    plot_epochs_metric(hist, png_str + test_info_str + '_epochs_loss.png')
 
-
-def save_logs(output_directory, hist, y_pred, y_true, duration, lr=True, y_true_val=None, y_pred_val=None):
+def save_logs(output_directory, hist, y_pred, y_true, duration, test_info_str, metrics_file_str, png_str, lr=True, y_true_val=None, y_pred_val=None):
     hist_df = pd.DataFrame(hist.history)
     hist_df.to_csv(output_directory + 'history.csv', index=False)
 
     df_metrics = calculate_metrics(y_true, y_pred, duration, y_true_val, y_pred_val)
     df_metrics.to_csv(output_directory + 'df_metrics.csv', index=False)
+
+    for file_str in metrics_file_str :
+        f = open(file_str, mode='at')
+        f.write('\n\n' + test_info_str + '\n')
+        f.write(str(df_metrics))
+        f.close()
+
 
     index_best_model = hist_df['loss'].idxmin()
     row_best_model = hist_df.loc[index_best_model]
@@ -402,6 +412,10 @@ def save_logs(output_directory, hist, y_pred, y_true, duration, lr=True, y_true_
 
     # plot losses
     plot_epochs_metric(hist, output_directory + 'epochs_loss.png')
+    for file_str in png_str :
+        plot_epochs_metric(hist, file_str + test_info_str + '_epochs_loss.png')
+
+
 
     return df_metrics
 
